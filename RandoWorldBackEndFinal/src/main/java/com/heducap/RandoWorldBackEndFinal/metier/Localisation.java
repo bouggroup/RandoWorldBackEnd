@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Localisation {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)private int id;
 
-	private Geometry dataGPS;
+	private Geometry dataGps;
 	@OneToOne private Itineraire itineraire;
 
 }
