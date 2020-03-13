@@ -16,24 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heducap.RandoWorldBackEndFinal.metier.Itineraire;
 import com.heducap.RandoWorldBackEndFinal.metier.Randonnee;
 import com.heducap.RandoWorldBackEndFinal.metier.projections.RandonneeComplet;
-import com.heducap.RandoWorldBackEndFinal.repositories.ItineraireRepository;
 import com.heducap.RandoWorldBackEndFinal.repositories.RandonneeRepository;
 
 @RestController
 @RequestMapping(value="/randonnees")
 @CrossOrigin
 public class RandonneeController {
-	
+
 	@Autowired
 	private RandonneeRepository randonneeRepository;
-	@Autowired
-	private ItineraireRepository itineraireRepository;
 	
 	private final ProjectionFactory projectionFactory;
 
@@ -41,8 +36,8 @@ public class RandonneeController {
 	public RandonneeController(ProjectionFactory projectionFactory) {
 		this.projectionFactory = projectionFactory;
 	}
-	
-	
+
+
 	@GetMapping
 	public Page<Randonnee> findAllRando(@PageableDefault(size = 10, page = 0) Pageable page){
 		return this.randonneeRepository.findAll(page);
@@ -57,33 +52,30 @@ public class RandonneeController {
 		else
 			return new ResponseEntity<>(randoOpt.get(), HttpStatus.OK);
 	}
-	
-	
+
+
 	@PostMapping
 	public ResponseEntity<Randonnee> createRando(@RequestBody Randonnee randonnee){
 		/**
 		 * Check Request Param if necessary (ex: Image , ...) 
 		 */
-		
+
 		return new ResponseEntity<>(this.randonneeRepository.save(randonnee), HttpStatus.CREATED);	
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<Randonnee> updateRando(@RequestBody Randonnee randonnee){
 		if(!this.randonneeRepository.existsById(randonnee.getId()) )
 			return new ResponseEntity<Randonnee>(HttpStatus.NOT_FOUND);
 		Randonnee rando =  randonnee;
 		return new ResponseEntity<Randonnee>(rando, HttpStatus.ACCEPTED);
-		
+
 	}
-	
+
 	@GetMapping("/allData")
 	public ResponseEntity<Page<RandonneeComplet>> findAllRandoComplet(@PageableDefault(size = 10, page = 0) Pageable page){
-		
+
 		return new ResponseEntity<Page<RandonneeComplet>>(randonneeRepository.findAll(page).map(
 				jv -> projectionFactory.createProjection(RandonneeComplet.class, jv)), HttpStatus.OK);
-		
-		
-		//return new ResponseEntity<>(projectionFactory.createProjection(RandonneeComplet.class, this.randonneeRepository.findAll(page).map(rando -> rando )), HttpStatus.OK );
 	}
 }
