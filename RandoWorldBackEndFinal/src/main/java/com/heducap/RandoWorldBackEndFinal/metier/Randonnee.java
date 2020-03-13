@@ -11,12 +11,11 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter  @NoArgsConstructor
 @Entity
 public class Randonnee {
 	
@@ -27,6 +26,17 @@ public class Randonnee {
 	private LocalDateTime dateDeCreation;
 	private LocalDateTime dateDeDeroulement;
 	@JsonIgnore @OneToMany (mappedBy = "randonnee") private Set<Itineraire> itineraires;
+	
+	public Randonnee(int id, String nom, String description, String organisateur, LocalDateTime dateDeCreation,
+			LocalDateTime dateDeDeroulement) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.organisateur = organisateur;
+		this.dateDeCreation = dateDeCreation;
+		this.dateDeDeroulement = dateDeDeroulement;
+	}
 	
 
 }
