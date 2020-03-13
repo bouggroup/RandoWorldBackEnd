@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.heducap.RandoWorldBackEndFinal.metier.Itineraire;
 import com.heducap.RandoWorldBackEndFinal.metier.Randonnee;
+import com.heducap.RandoWorldBackEndFinal.metier.projections.RandonneeComplet;
 import com.heducap.RandoWorldBackEndFinal.repositories.ItineraireRepository;
 import com.heducap.RandoWorldBackEndFinal.repositories.RandonneeRepository;
 
@@ -32,6 +34,13 @@ public class RandonneeController {
 	private RandonneeRepository randonneeRepository;
 	@Autowired
 	private ItineraireRepository itineraireRepository;
+	
+	private final ProjectionFactory projectionFactory;
+
+	@Autowired
+	public RandonneeController(ProjectionFactory projectionFactory) {
+		this.projectionFactory = projectionFactory;
+	}
 	
 	
 	@GetMapping
@@ -66,5 +75,15 @@ public class RandonneeController {
 		Randonnee rando =  randonnee;
 		return new ResponseEntity<Randonnee>(rando, HttpStatus.ACCEPTED);
 		
+	}
+	
+	@GetMapping("/allData")
+	public ResponseEntity<Page<RandonneeComplet>> findAllRandoComplet(@PageableDefault(size = 10, page = 0) Pageable page){
+		
+		return new ResponseEntity<Page<RandonneeComplet>>(randonneeRepository.findAll(page).map(
+				jv -> projectionFactory.createProjection(RandonneeComplet.class, jv)), HttpStatus.OK);
+		
+		
+		//return new ResponseEntity<>(projectionFactory.createProjection(RandonneeComplet.class, this.randonneeRepository.findAll(page).map(rando -> rando )), HttpStatus.OK );
 	}
 }
