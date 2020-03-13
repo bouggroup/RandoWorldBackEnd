@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.heducap.RandoWorldBackEndFinal.metier.Image;
 
-public interface ImageRepository extends PagingAndSortingRepository<Image, Integer> {
+public interface ImageRepository extends PagingAndSortingRepository<Image, Integer>, ImageRepositoryCustom  {
 
 }
