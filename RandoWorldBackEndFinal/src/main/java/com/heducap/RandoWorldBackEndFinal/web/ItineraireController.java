@@ -29,6 +29,7 @@ public class ItineraireController {
 		return this.itineraireRepository.findAll(page);
 	}
 	
+
 	@PostMapping
 	public ResponseEntity<Itineraire> createItineraire(
 			@RequestBody Itineraire itineraire){

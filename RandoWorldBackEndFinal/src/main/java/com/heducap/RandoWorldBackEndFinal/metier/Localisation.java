@@ -1,10 +1,10 @@
 package com.heducap.RandoWorldBackEndFinal.metier;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vividsolutions.jts.geom.Geometry;
@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Localisation {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)private int id;
 
+
 	private Geometry dataGps;
 	@OneToOne @JsonIgnore private Itineraire itineraire;
 	
@@ -31,5 +32,6 @@ public class Localisation {
 	}
 	
 	
+
 
 }
