@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heducap.RandoWorldBackEndFinal.metier.Itineraire;
+import com.heducap.RandoWorldBackEndFinal.metier.Randonnee;
 import com.heducap.RandoWorldBackEndFinal.repositories.ItineraireRepository;
+import com.heducap.RandoWorldBackEndFinal.repositories.RandonneeRepository;
 
 @RestController
 @RequestMapping("/itineraires")
@@ -22,6 +25,8 @@ import com.heducap.RandoWorldBackEndFinal.repositories.ItineraireRepository;
 public class ItineraireController {
 	@Autowired
 	private ItineraireRepository itineraireRepository;
+	@Autowired
+	private RandonneeRepository randonneeRepository;
 
 	
 	@GetMapping
@@ -32,7 +37,15 @@ public class ItineraireController {
 
 	@PostMapping
 	public ResponseEntity<Itineraire> createItineraire(
-			@RequestBody Itineraire itineraire){
+			@RequestBody Itineraire itineraire,
+			@RequestParam("randonneeId") int randonneeId){
+		
+		if(!randonneeRepository.existsById(randonneeId))
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		
+		Randonnee rando = this.randonneeRepository.findById(randonneeId).get();
+		itineraire.setRandonnee(rando);
+		
 		itineraire = itineraireRepository.save(itineraire);
 		return new ResponseEntity<Itineraire>(itineraire, HttpStatus.CREATED);
 	}
