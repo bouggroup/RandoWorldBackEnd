@@ -23,7 +23,7 @@ public class Itineraire {
 	private LocalDateTime dateDeCreation;
 	private LocalDateTime dateDeModification;
 	private String nomDuCreateur;
-	@ManyToOne @JsonIgnore  private Randonnee randonnee;
+	@ManyToOne   private Randonnee randonnee;
 	
 	@OneToOne(mappedBy = "itineraire") private Image image;
 	
