@@ -72,7 +72,7 @@ public class RandonneeController {
 
 	}
 
-	@GetMapping("/allData")
+	@GetMapping("/donneeComplete")
 	public ResponseEntity<Page<RandonneeComplet>> findAllRandoComplet(@PageableDefault(size = 10, page = 0) Pageable page){
 
 		return new ResponseEntity<Page<RandonneeComplet>>(randonneeRepository.findAll(page).map(
