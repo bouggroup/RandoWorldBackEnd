@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5e973850-c6fe-4fb0-91f7-b9e6fb47f4d1",
+		"_postman_id": "4d50f751-b046-43ac-aa5a-8c981dc0c6b3",
 		"name": "RandoWorldFinal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -237,6 +237,53 @@
 						"images",
 						"1",
 						"thumbdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET localisation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/localisation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"localisation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post localisation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n       \r\n        \"dataGps\": {\r\n            \"type\": \"LineString\",\r\n            \"coordinates\": [\r\n                [\r\n                    5.0,\r\n                   8.0\r\n                ],\r\n                [\r\n                    9.0,\r\n                    6.0\r\n                ]\r\n            ]\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/localisation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"localisation"
 					]
 				}
 			},
